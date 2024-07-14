@@ -50,10 +50,31 @@ const listingScheme=new Schema({
           required: true,
         },
       },
-    category:{
-        type:String,
-        enum:["mountains","rooms","snow","beach","nature","Historic","castle","pool"],
-    },
+    // category:{
+    //     type:String,
+    //     enum:["mountains","rooms","snow","beach","nature","Historic","castle","pool"],
+    // },
+    category: {
+        type: String,
+        enum: [
+          "Top Cities",
+          "Rooms",
+          "Mansions",
+          "Cabins",
+          "Tropical",
+          "Beach",
+          "Lakes",
+          "Arctic",
+          "Desert",
+          "Mountains",
+          "Countryside",
+          "Camping",
+          "Swimming Pools",
+          "Amazing Views",
+          "Historical Homes",
+        ],
+        required: true
+      },
 });
 
 listingScheme.post("findOneAndDelete",async(listing)=>{

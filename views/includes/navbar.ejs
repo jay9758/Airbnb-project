@@ -13,9 +13,10 @@
     position: absolute;
     background-color: white;
     z-index: 1001; /* Ensure higher than default z-index to overlay properly */
-    width: 100%;
+    width: 95%;
     top: 100%; /* Position below the navbar */
     left: 0.5rem; /* Align with the left edge of the navbar */
+    padding-left: 0.9rem;
 }
 
 @media (min-width: 779px) {
@@ -39,8 +40,8 @@
         </div>
 
         <div class="navbar-nav ms-auto">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2 sinput" type="search" placeholder="Search destinations" aria-label="Search">
+          <form action="/listings/search" method="get"class="d-flex" role="search" id="search">
+            <input class="form-control me-2 sinput" type="search" placeholder="Search destinations" aria-label="Search" name="input">
             <button class="btn btn-outline-success search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
           </form>      
         </div>

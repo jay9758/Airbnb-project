@@ -9,9 +9,15 @@ const multer  = require('multer')
 const {storage}=require("../cloudConfig.js");
 const upload = multer({storage});
 
+const { category,search } = require("../controllers/query.js");
+
+
 router.route("/new")
 .get(isloggedin,listingController.newForm)
 .post(isloggedin,upload.single('image'),validatelisting,wrapasync(listingController.newAdd));
+
+router.get("/category/:id", wrapasync(category));
+router.route("/search").get(wrapasync(search));
 
 router.route("/:id")
 .get(wrapasync(listingController.show))

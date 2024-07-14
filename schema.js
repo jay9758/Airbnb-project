@@ -7,6 +7,23 @@ module.exports.listingScheme=Joi.object({
         location:Joi.string().required(),
         country:Joi.string().required(),
         image:Joi.string().allow("",null),
+        category: Joi.string().valid(
+            "Top Cities",
+            "Rooms",
+            "Mansions",
+            "Cabins",
+            "Tropical",
+            "Beach",
+            "Lakes",
+            "Arctic",
+            "Desert",
+            "Mountains",
+            "Countryside",
+            "Camping",
+            "Swimming Pools",
+            "Amazing Views",
+            "Historical Homes"
+        ).required()
     });
 
 module.exports.reviewSchema=Joi.object({

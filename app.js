@@ -20,6 +20,8 @@ const passport=require("passport");
 const Localstrategy=require("passport-local");
 const User=require("./models/user.js");
 
+const listingController=require("./controllers/listing.js");
+
 const dbUrl=process.env.ATLASDB_URL;
 
 app.set("view engine", "ejs");
@@ -92,7 +94,14 @@ app.use((req,res,next)=>{
     next();
 });
 
+// app.get("/",(req,res)=>{
+    
+// });
+
 app.use("/listings",listings);
+
+app.get("/", wrapasync(listingController.index));
+
 app.use("/listings/:id/reviews",reviews);
 app.use("/",users);
 

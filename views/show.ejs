@@ -1,35 +1,43 @@
 <% layout("/layouts/boilerplate") -%>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
 <style>
-    /* Default styles for larger screens */
-/* .listings-image {
-    width: 100%;
-    height: auto;
-} */
 
-/* Styles for mobile devices */
-@media (max-width: 450px) {
-    .listings-image {
-        width: 100%; /* Adjust as needed for desired size on mobile */
+@media (max-width: 430px) {
+    /* .listings-image {
+        width: 100%; 
         height: auto;
-    }
+    } */
     #map{
         height: 15rem;
-        width: 20rem;
-    }
-    #mpos{
-        margin-left:1.5rem;
+        width: 21.5rem;
     }
     #review{
-        height: 12rem;
-        width: 13rem;
+        height: auto;
+        width: auto;
+        padding: 0%;
     }
     #main{
-        width:100vh;
-        margin-left:2rem;
+        
+        width:21.6rem;
+    }
+    .locations {
+        width:20rem;
+    }
+    .descriptions{
+        width: 20rem;
+    }
+    .auth-text {
+    display: block; /* Ensure each element is on a new line */
+    font-size:0.881rem;
+    }
+    .signup-prompt {
+    display: block;
+    margin-left: 0; /* Reset margin for mobile view */
     }
 }
-@media (min-width: 800px) and (max-width: 830px) {
+/* @media (min-width: 800px) and (max-width: 830px) {
     #map{
         height: 25rem;
         width: 30rem;
@@ -37,9 +45,41 @@
     #main{
         width: 100vh;
     }
-}    
-
-</style>
+}     */
+.titles{
+        font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: #333;
+    font-size:24px;
+    }
+    .owners{
+        font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: #767676;
+    }
+    .descriptions{
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    color: #484848;
+    }
+    .prices{
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #484848;
+    }
+    .locations{
+        font-family: 'Open Sans', sans-serif;
+    font-size: 19px;
+    color: #555;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    }
+    .locations i{
+        color: #ff5a5f;
+    }
+</style> 
 
     <body>
         <script>
@@ -48,29 +88,29 @@
         </script>
         <div class="container mt-3">
             <div class="row">
-                <div class="col-8 col-md-8 offset-2" id="main">
-                    <h3><b>
+                <div class="col-12 col-md-8 offset-md-2">
+
+                    <h3 class="titles"><b>
                             <%= listing.title %>
                         </b></h3>
-                    <div class="card listing-card" style="width: 80%;">
-                        <img src="<%= listing.image.url %>" class="card-img-top listings-image" alt="listings_image">
+                    <div class="card listing-card card" style="width: 80%;">
+                        <img src="<%= listing.image.url %>" class="card-img-top listings-image" alt="listings_image" id="main">
                         <div class="card-body">
                             <p class="card-text">
-                                <p>Owned by<i> <%= listing.owner.username %> </i></p>
-                                <p><%= listing.description %></p>
-                                <p> &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : 'Price not available'
+                                <p class="owners"> <i class="fas fa-user-circle fa-lg"></i> Owned by <i><%= listing.owner.username %> </i></p>
+                                <p class="descriptions">"<%= listing.description %>"</p>
+                                <p class="prices"> &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : 'Price not available'
                                         %>/Night</p>
-                                <p><%= listing.location %></p>    
-                                <p><%= listing.country %></p>         
+                                <p class="locations"><i class="fa-solid fa-location-dot"></i> &nbsp;<%= listing.location %> ,&nbsp;<%= listing.country %></p>            
                             </p>
 
                             <% if (curruser && curruser._id.equals(listing.owner._id)) { %>
                                 <div class="card-btn">
                                 <form method="get" action="/listings/<%= listing._id %>/edit">
-                                    <button class="btn">Edit</button>
+                                    <button class="btn" style="background-color: #4e8cff !important;">Edit</button>
                                 </form>
                                 <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-                                    <button class="btn">Delete</button>
+                                    <button class="btn" style="background-color: #dc3545 !important;">Delete</button>
                                 </form>
                             </div>
                             <% } %>
@@ -80,7 +120,7 @@
                 </div>
             </div>
             <hr>
-            <div class="col-8 offset-3">
+            <div class="col-12 col-md-8 offset-md-3">
                 <% if (curruser) { %>
                  <h3>Leave a review</h3>
                 <form method="post" action="/listings/<%= listing._id %>/reviews" class="mb-3 needs-validation" novalidate>
@@ -109,8 +149,7 @@
                             please enter comment
                         </div>
                     </div>
-                    <button class="btn btn-outline-dark mt-3"
-                        style="background-color: black !important;">submit</button>
+                    <button class="btn" style="background-color: #4CAF50 !important;">submit</button>
                 </form>
                 <% } %>
 
@@ -124,9 +163,15 @@
                                 <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
                                 <p class="card-text"><%= review.comment %></p>
 
-                                <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                <!-- <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
                                     <button class="btn btn-dark" style="background-color: black !important;">Delete</button>
-                                </form>
+                                </form> -->
+
+                                <% if (curruser && curruser._id.toString() === review.author._id.toString()) { %>
+                                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                        <button class="btn btn-dark" style="background-color: #dc3545 !important;">Delete</button>
+                                    </form>
+                                <% } %>
 
                             </div>
                         </div>  
@@ -135,7 +180,18 @@
                 <% } %>
             </div>
 
-            <div class="col-8 offset-3 mt-3 mb-3" id="mpos">
+            <% if (!curruser) { %>
+             <div class="col-12 col-md-8 offset-md-3 mt-3 mb-3">
+                <p class="auth-text">
+                  <a href="/login" class="auth-link">Login</a> to write a review.
+                  <span class="signup-prompt">
+                    Don't have an account? <a href="/signup" class="auth-link">Sign up</a>
+                  </span>
+                </p>
+            </div>
+            <% } %>
+                          
+            <div class="col-12 col-md-8 offset-md-3 mt-3 mb-3">
                     <h4>Where you'll be</h4>
                     <div id="map"></div>
             </div>
